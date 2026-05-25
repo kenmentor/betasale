@@ -1,9 +1,19 @@
-import { GroceryCategory, GroceryPriority, useGroceryStore } from "@/store/grocery-store";
+import {
+  GroceryCategory,
+  GroceryPriority,
+  useGroceryStore,
+} from "@/safetrash/api/store/grocery-store";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
-const categories: GroceryCategory[] = ["Produce", "Dairy", "Bakery", "Pantry", "Snacks"];
+const categories: GroceryCategory[] = [
+  "Produce",
+  "Dairy",
+  "Bakery",
+  "Pantry",
+  "Snacks",
+];
 const priorities: GroceryPriority[] = ["low", "medium", "high"];
 
 const categoryIcons = {
@@ -48,7 +58,7 @@ const PlannerFormCard = () => {
   };
 
   return (
-    <View className="rounded-3xl border border-border bg-card p-4">
+    <View className="rounded-3xl border border-border ">
       {/* NAME */}
       <Text className="text-sm font-semibold text-foreground">Item name</Text>
       <View className="mt-2 flex-row items-center rounded-2xl border border-border bg-muted px-4 py-3">
@@ -63,7 +73,9 @@ const PlannerFormCard = () => {
       </View>
 
       {/* QUANTITY */}
-      <Text className="mt-4 text-sm font-semibold text-foreground">Quantity</Text>
+      <Text className="mt-4 text-sm font-semibold text-foreground">
+        Quantity
+      </Text>
       <View className="mt-2 flex-row items-center rounded-2xl border border-border bg-muted px-4 py-3">
         <FontAwesome6 name="hashtag" size={13} color="#5b7567" />
         <TextInput
@@ -77,7 +89,9 @@ const PlannerFormCard = () => {
       </View>
 
       {/* CATEGORIES */}
-      <Text className="mt-4 text-sm font-semibold text-foreground">Category</Text>
+      <Text className="mt-4 text-sm font-semibold text-foreground">
+        Category
+      </Text>
       <View className="mt-2 flex-row flex-wrap gap-2">
         {categories.map((option) => {
           const active = option === category;
@@ -96,7 +110,9 @@ const PlannerFormCard = () => {
               />
               <Text
                 className={`ml-2 text-sm font-semibold ${
-                  active ? "text-primary-foreground" : "text-secondary-foreground"
+                  active
+                    ? "text-primary-foreground"
+                    : "text-secondary-foreground"
                 }`}
               >
                 {option}
@@ -107,11 +123,18 @@ const PlannerFormCard = () => {
       </View>
 
       {/* PRIORITY */}
-      <Text className="mt-4 text-sm font-semibold text-foreground">Priority</Text>
+      <Text className="mt-4 text-sm font-semibold text-foreground">
+        Priority
+      </Text>
       <View className="mt-2 flex-row gap-2">
         {priorities.map((option) => {
           const active = option === priority;
-          const icon = option === "high" ? "bolt" : option === "medium" ? "compass" : "seedling";
+          const icon =
+            option === "high"
+              ? "bolt"
+              : option === "medium"
+                ? "compass"
+                : "seedling";
           return (
             <Pressable
               key={option}
@@ -120,10 +143,16 @@ const PlannerFormCard = () => {
                 active ? "bg-primary" : "bg-secondary"
               }`}
             >
-              <FontAwesome6 name={icon} size={12} color={active ? "#ffffff" : "#486856"} />
+              <FontAwesome6
+                name={icon}
+                size={12}
+                color={active ? "#ffffff" : "#486856"}
+              />
               <Text
                 className={`mt-1 text-sm font-semibold capitalize ${
-                  active ? "text-primary-foreground" : "text-secondary-foreground"
+                  active
+                    ? "text-primary-foreground"
+                    : "text-secondary-foreground"
                 }`}
               >
                 {option}
@@ -140,7 +169,11 @@ const PlannerFormCard = () => {
         onPress={createItem}
         disabled={!canCreate}
       >
-        <FontAwesome6 name="plus" size={14} color={canCreate ? "#ffffff" : "#7a9386"} />
+        <FontAwesome6
+          name="plus"
+          size={14}
+          color={canCreate ? "#ffffff" : "#7a9386"}
+        />
         <Text
           className={`ml-2 text-base font-semibold ${
             canCreate ? "text-primary-foreground" : "text-muted-foreground"
@@ -152,7 +185,9 @@ const PlannerFormCard = () => {
 
       {error ? (
         <View className="mt-3 rounded-2xl border border-destructive bg-destructive px-3 py-2">
-          <Text className="text-sm text-white text-center uppercase">{error}</Text>
+          <Text className="text-sm text-white text-center uppercase">
+            {error}
+          </Text>
         </View>
       ) : null}
     </View>

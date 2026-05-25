@@ -1,4 +1,4 @@
-import { useGroceryStore } from "@/store/grocery-store";
+import { useGroceryStore } from "@/safetrash/api/store/grocery-store";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Pressable, Text, View } from "react-native";
 
@@ -26,7 +26,9 @@ const CompletedItems = () => {
             >
               <FontAwesome6 name="check" size={12} color="#ffffff" />
             </Pressable>
-            <Text className="text-base text-muted-foreground line-through">{item.name}</Text>
+            <Text className="text-base text-muted-foreground line-through">
+              {item.name}
+            </Text>
           </View>
 
           <Pressable

@@ -1,63 +1,41 @@
-import PendingItemCard from "@/components/list/PendingItemCard";
-import { useGroceryStore } from "@/store/grocery-store";
+import { PRODUCTS } from "@/lib/marketplace-store";
+import React from "react";
 import { FlatList, Text, View } from "react-native";
 
-import CompletedItems from "@/components/list/CompletedItems";
 import ListHeroCard from "@/components/list/ListHeroCard";
-import TabScreenBackground from "@/components/TabScreenBackground";
+import ProductCard from "@/components/list/PendingItemCard";
 
-export default function ListScreen() {
-  const { items } = useGroceryStore();
-
-  const pendingItems = items.filter((item) => !item.purchased);
-
+export default function HomeScreen() {
   return (
-    <FlatList
-      className="flex-1 bg-background "
-      data={pendingItems}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PendingItemCard item={item} />}
-      contentContainerStyle={{ padding: 20, gap: 14 }}
-      contentInsetAdjustmentBehavior="automatic"
-      ListHeaderComponent={
-        <View style={{ gap: 14, paddingTop: 20 }}>
-          <TabScreenBackground />
-          <ListHeroCard />
-          <View className="flex-row items-center justify-between px-1">
-            <Text className="text-sm font-semibold uppercase tracking-[1px] text-muted-foreground">
-              Shopping items
-            </Text>
-            <Text className="text-sm text-muted-foreground">{pendingItems.length} active</Text>
+    <View className="flex-1 bg-background relative">
+      <FlatList
+        className="flex-1 z-10"
+        data={PRODUCTS}
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 64 }}
+        columnWrapperStyle={{
+          paddingHorizontal: 20,
+          gap: 12,
+          marginBottom: 14,
+        }}
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <ProductCard item={item} />}
+        ListHeaderComponent={
+          <View className="relative w-full mb-2">
+            <ListHeroCard />
+            <View className="flex-row items-center justify-between px-6 pt-12 pb-2">
+              <Text className="text-xs font-bold uppercase tracking-[1.5px] text-muted-foreground">
+                Featured Products
+              </Text>
+              <Text className="text-sm font-medium text-muted-foreground">
+                {PRODUCTS.length} items
+              </Text>
+            </View>
           </View>
-        </View>
-      }
-      ListFooterComponent={<CompletedItems />}
-    />
+        }
+      />
+    </View>
   );
 }
-
-// FIRST VERSION WITH ITEMS.MAP
-/*
-<ScrollView
-      className="flex-1 bg-background py-4"
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ padding: 20, gap: 14 }}
-    >
-      <TabScreenBackground />
-
-      <ListHeroCard />
-
-      <View className="flex-row items-center justify-between px-1">
-        <Text className="text-sm font-semibold uppercase tracking-[1px] text-muted-foreground">
-          Shopping items
-        </Text>
-        <Text className="text-sm text-muted-foreground">{pendingItems.length} active</Text>
-      </View>
-
-      {pendingItems.map((item) => (
-        <PendingItemCard key={item.id} item={item} />
-      ))}
-
-      <CompletedItems />
-    </ScrollView>
-*/

@@ -1,4 +1,4 @@
-import { useGroceryStore } from "@/store/grocery-store";
+import { useGroceryStore } from "@/safetrash/api/store/grocery-store";
 import { Pressable, Text } from "react-native";
 
 export default function ClearCompletedButton() {

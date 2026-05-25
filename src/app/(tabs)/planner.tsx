@@ -1,7 +1,7 @@
 import PlannerFormCard from "@/components/planner/PlannerFormCard";
 import PlannerHeroImage from "@/components/planner/PlannerHeroImage";
 import TabScreenBackground from "@/components/TabScreenBackground";
-import { useGroceryStore } from "@/store/grocery-store";
+import { useGroceryStore } from "@/safetrash/api/store/grocery-store";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -39,12 +39,17 @@ const PlannerScreen = () => {
               Plan smarter, shop calmer.
             </Text>
             <Text className="mt-2 text-sm leading-5 text-muted-foreground">
-              Organize your next grocery run with categories, quantities, and priority in one place.
+              Organize your next grocery run with categories, quantities, and
+              priority in one place.
             </Text>
           </View>
 
           <View className="h-12 w-12 items-center justify-center rounded-2xl bg-primary">
-            <FontAwesome6 name="wand-magic-sparkles" size={18} color="#ffffff" />
+            <FontAwesome6
+              name="wand-magic-sparkles"
+              size={18}
+              color="#ffffff"
+            />
           </View>
         </View>
 
@@ -53,21 +58,27 @@ const PlannerScreen = () => {
             <Text className="text-xs font-medium uppercase tracking-[1px] text-muted-foreground">
               Pending
             </Text>
-            <Text className="mt-1 text-xl font-bold text-foreground">{pendingCount}</Text>
+            <Text className="mt-1 text-xl font-bold text-foreground">
+              {pendingCount}
+            </Text>
           </View>
 
           <View className="flex-1 rounded-2xl border border-border bg-background/80 p-3">
             <Text className="text-xs font-medium uppercase tracking-[1px] text-muted-foreground">
               High Priority
             </Text>
-            <Text className="mt-1 text-xl font-bold text-foreground">{highPriorityCount}</Text>
+            <Text className="mt-1 text-xl font-bold text-foreground">
+              {highPriorityCount}
+            </Text>
           </View>
 
           <View className="flex-1 rounded-2xl border border-border bg-background/80 p-3">
             <Text className="text-xs font-medium uppercase tracking-[1px] text-muted-foreground">
               Units
             </Text>
-            <Text className="mt-1 text-xl font-bold text-foreground">{totalQuantity}</Text>
+            <Text className="mt-1 text-xl font-bold text-foreground">
+              {totalQuantity}
+            </Text>
           </View>
         </View>
       </View>

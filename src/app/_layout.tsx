@@ -1,36 +1,35 @@
-import { ClerkProvider } from "@clerk/expo";
-import { tokenCache } from "@clerk/expo/token-cache";
-
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { useColorScheme } from "react-native";
 
-import * as Sentry from "@sentry/react-native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
 import "../../global.css";
 
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+// 1. Instantiate the global cache manager
+const queryClient = new QueryClient();
 
-if (!publishableKey) {
-  throw new Error("Add your Clerk Publishable Key to the .env file");
-}
-
-Sentry.init({
-  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-  integrations: [Sentry.feedbackIntegration()],
-});
-
-export default Sentry.wrap(function RootLayout() {
+export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <KeyboardProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    // 2. Keyboard Layer: Manages safe interactive window insets
+    <KeyboardProvider>
+      {/* 3. Server State Layer: Passes the data cache downwards */}
+      <QueryClientProvider client={queryClient}>
+        {/* 4. Native Routing Design Layer: Injects navigation context */}
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          {/* 5. The Root Router Stack */}
           <Stack screenOptions={{ headerShown: false }} />
         </ThemeProvider>
-      </KeyboardProvider>
-    </ClerkProvider>
+      </QueryClientProvider>
+    </KeyboardProvider>
   );
-});
+}

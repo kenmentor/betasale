@@ -1,15 +1,11 @@
-import { useAuth } from "@clerk/expo";
+import { useMarketplaceStore } from "@/lib/marketplace-store";
 import { Redirect, Stack } from "expo-router";
 
 export default function AuthRoutesLayout() {
-  const { isSignedIn, isLoaded } = useAuth();
+  const isAuthenticated = useMarketplaceStore((s) => s.isAuthenticated);
 
-  if (!isLoaded) {
-    return null;
-  }
-
-  if (isSignedIn) {
-    return <Redirect href={"/"} />;
+  if (isAuthenticated) {
+    return <Redirect href="/(tabs)" />;
   }
 
   return <Stack screenOptions={{ headerShown: false }} />;

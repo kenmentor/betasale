@@ -1,4 +1,4 @@
-import { useGroceryStore } from "@/store/grocery-store";
+import { useGroceryStore } from "@/safetrash/api/store/grocery-store";
 import { Text, View } from "react-native";
 
 const categoryColors: Record<string, string> = {
@@ -17,23 +17,31 @@ export default function InsightsCategorySection() {
     acc[item.category] = (acc[item.category] ?? 0) + 1;
     return acc;
   }, {});
-  const categoryEntries = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+  const categoryEntries = Object.entries(categories).sort(
+    (a, b) => b[1] - a[1],
+  );
 
   return (
     <View className="rounded-3xl border border-border bg-card p-4">
       <View className="flex-row items-center justify-between">
-        <Text className="text-sm font-semibold text-foreground">Items by category</Text>
+        <Text className="text-sm font-semibold text-foreground">
+          Items by category
+        </Text>
         <Text className="text-xs uppercase tracking-[1px] text-muted-foreground">
           {categoryEntries.length} groups
         </Text>
       </View>
 
       {categoryEntries.map(([category, count]) => {
-        const widthPercent = total ? Math.max(10, Math.round((count / total) * 100)) : 10;
+        const widthPercent = total
+          ? Math.max(10, Math.round((count / total) * 100))
+          : 10;
         return (
           <View key={category} className="mt-3">
             <View className="mb-1 flex-row items-center justify-between">
-              <Text className="text-sm font-medium text-foreground">{category}</Text>
+              <Text className="text-sm font-medium text-foreground">
+                {category}
+              </Text>
               <Text className="text-sm text-muted-foreground">{count}</Text>
             </View>
             <View className="overflow-hidden rounded-full bg-secondary">

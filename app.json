@@ -26,7 +26,6 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "@clerk/expo",
       "expo-router",
       [
         "expo-splash-screen",
@@ -36,15 +35,6 @@
             "image": "./assets/images/splash-icon.png",
             "imageWidth": 76
           }
-        }
-      ],
-      "expo-web-browser",
-      [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://sentry.io/",
-          "project": "grocify",
-          "organization": "codesistency-gs"
         }
       ]
     ],

@@ -1,78 +1,91 @@
-import { GroceryItem, useGroceryStore } from "@/store/grocery-store";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { Product } from "@/lib/marketplace-store";
+import { Image } from "expo-image";
+import { router } from "expo-router";
+import { Eye, Heart, Star } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
-const priorityPillBg = {
-  low: "bg-priority-low",
-  medium: "bg-priority-medium",
-  high: "bg-priority-high",
+type Props = {
+  item: Product;
 };
 
-const priorityPillText = {
-  low: "text-priority-low-foreground",
-  medium: "text-priority-medium-foreground",
-  high: "text-priority-high-foreground",
-};
-
-const PendingItemCard = ({ item }: { item: GroceryItem }) => {
-  const { removeItem, updateQuantity, togglePurchased } = useGroceryStore();
+const ProductCard = ({ item }: Props) => {
+  console.log("Image uri: ", item.imageUri);
+  const discount = item.originalPrice
+    ? Math.round((1 - item.price / item.originalPrice) * 100)
+    : 0;
 
   return (
-    <View className="rounded-3xl border border-border bg-card p-4">
-      <View className="flex-row items-start gap-3">
-        <Pressable
-          className="mt-1 size-6 items-center justify-center rounded-full border-2 border-border bg-card"
-          onPress={() => togglePurchased(item.id)}
-        ></Pressable>
-
-        <View className="flex-1">
-          <View className="flex-row items-center justify-between gap-2">
-            <Text className="flex-1 text-lg font-semibold text-card-foreground">{item.name}</Text>
-            <View className={`rounded-full px-3 py-1 ${priorityPillBg[item.priority]}`}>
-              <Text className={`text-xs font-bold uppercase ${priorityPillText[item.priority]}`}>
-                {item.priority}
+    <View className="flex-1">
+      <View className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
+        <View className="relative border border-blue-900 h-40">
+          <Image
+            source={{
+              uri: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+            }}
+            style={{ width: 200, height: 200 }}
+            contentFit="cover"
+            transition={200}
+          />
+          {item.badge && (
+            <View className="absolute top-2 left-2 bg-primary rounded-full px-2.5 py-1">
+              <Text className="text-[10px] font-bold text-primary-foreground">
+                {item.badge}
               </Text>
             </View>
-          </View>
-
-          <View className="mt-2 flex-row items-center gap-2">
-            <View className="rounded-full bg-secondary px-3 py-1">
-              <Text className="text-xs font-semibold text-secondary-foreground">
-                {item.category}
-              </Text>
-            </View>
-          </View>
-
-          <View className="mt-3 flex-row items-center gap-2">
-            <Pressable
-              className="h-8 w-8 items-center justify-center rounded-xl border border-border bg-muted"
-              onPress={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
-            >
-              <FontAwesome6 name="minus" size={12} color="#3b5a4a" />
-            </Pressable>
-
-            <Text className="min-w-9 text-center text-base font-semibold text-foreground">
-              {item.quantity}
-            </Text>
-
-            <Pressable
-              className="h-8 w-8 items-center justify-center rounded-xl border border-border bg-muted"
-              onPress={() => updateQuantity(item.id, item.quantity + 1)}
-            >
-              <FontAwesome6 name="plus" size={12} color="#3b5a4a" />
-            </Pressable>
-          </View>
+          )}
+          <Pressable className="absolute top-2 right-2 h-7 w-7 items-center justify-center rounded-full bg-white/80">
+            <Heart size={14} color="#666" />
+          </Pressable>
         </View>
 
-        <Pressable
-          className="h-9 w-9 items-center justify-center rounded-xl bg-destructive"
-          onPress={() => removeItem(item.id)}
-        >
-          <FontAwesome6 name="trash" size={13} color="#d45f58" />
-        </Pressable>
+        <View className="p-3 gap-1.5">
+          <Pressable onPress={() => router.push(`/productDetails/${item.id}`)}>
+            <Text
+              className="text-[13px] font-semibold text-foreground leading-tight"
+              numberOfLines={2}
+            >
+              {item.title}
+            </Text>
+          </Pressable>
+
+          <View className="flex-row items-center gap-1">
+            <Star size={12} color="#f59e0b" fill="#f59e0b" />
+            <Text className="text-[11px] font-medium text-muted-foreground">
+              {item.rating}
+            </Text>
+            <Text className="text-[11px] text-muted-foreground">
+              ({item.reviewsCount})
+            </Text>
+          </View>
+
+          <View className="flex-row items-baseline gap-1.5">
+            <Text className="text-base font-extrabold text-primary">
+              ${item.price}
+            </Text>
+            {item.originalPrice && (
+              <Text className="text-[11px] text-muted-foreground line-through">
+                ${item.originalPrice}
+              </Text>
+            )}
+          </View>
+
+          <Text className="text-[11px] text-muted-foreground" numberOfLines={1}>
+            by {item.seller}
+          </Text>
+
+          <Pressable
+            onPress={() => router.push(`/productDetails/${item.id}`)}
+            className="mt-1 flex-row items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 active:opacity-80"
+          >
+            <Eye size={14} color="#fff" />
+            <Text className="text-[12px] font-bold text-primary-foreground">
+              View Product
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
 };
 
-export default PendingItemCard;
+export default ProductCard;
