@@ -1,0 +1,29 @@
+{
+  "name": "vendora-backend",
+  "version": "1.0.0",
+  "description": "Vendora — Escrow E-Commerce Platform Backend",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "tsc",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/hono": "^4.7.0",
+    "drizzle-orm": "^0.38.0",
+    "@better-auth/hono": "^0.3.0",
+    "better-auth": "^1.2.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250201.0",
+    "drizzle-kit": "^0.30.0",
+    "typescript": "^5.7.0",
+    "wrangler": "^3.107.0"
+  }
+}
