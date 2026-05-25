@@ -21,7 +21,7 @@ const app = new Hono<{ Bindings: Env }>();
 
 app.use("*", cors());
 app.use("*", logger());
-app.onError(errorHandler);
+// app.onError(errorHandler);
 
 app.get("/health", (c) => c.json({ status: "ok", service: "vendora-backend" }));
 

@@ -1,0 +1,37 @@
+# --- System & IDE Files ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# --- Node & Bundling ---
+node_modules/
+dist/
+/build
+.npm
+.eslintcache
+*.tsbuildinfo
+
+# --- Cloudflare Wrangler Specifics ---
+.wrangler/
+.dev.vars
+wrangler-local.db
+local.db
+*.db-journal
+
+# --- Environment Variables & Secrets ---
+.env
+.env.local
+.env.*.local
+*.pem
+
+# --- Drizzle ORM ---
+# Note: DO NOT ignore the 'drizzle/' folder completely! 
+# You NEED your drizzle/*.sql migration files committed to git so production can update.
+# But you should ignore local state backups if they happen.
+drizzle/.migrations/

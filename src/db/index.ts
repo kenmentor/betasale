@@ -1,6 +1,4 @@
 import { drizzle } from "drizzle-orm/d1";
-import type { Env } from "../config/env";
-
 import * as usersSchema from "./schema/users";
 import * as productsSchema from "./schema/products";
 import * as cartSchema from "./schema/cart";
@@ -21,7 +19,13 @@ export const schema = {
   ...notificationsSchema,
 };
 
-export function getDb(env: Env) {
+// 1. Explicitly type the only thing Drizzle cares about: your D1 binding
+export type DbBindings = {
+  DB: D1Database;
+};
+
+// 2. Pass it in ONCE cleanly without conflicting parameter names
+export function getDb(env: DbBindings) {
   return drizzle(env.DB, { schema });
 }
 

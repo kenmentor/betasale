@@ -6,6 +6,7 @@ compatibility_date = "2025-02-01"
 binding = "DB"
 database_name = "vendora-db"
 database_id = ""
+migrations_dir = "drizzle/migrations"
 
 [env.production]
 [[env.production.d1_databases]]
