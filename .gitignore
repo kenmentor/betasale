@@ -34,4 +34,4 @@ local.db
 # Note: DO NOT ignore the 'drizzle/' folder completely! 
 # You NEED your drizzle/*.sql migration files committed to git so production can update.
 # But you should ignore local state backups if they happen.
-drizzle/.migrations/
+drizzle/.migrations/.dev.vars
