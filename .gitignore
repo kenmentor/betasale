@@ -78,3 +78,4 @@ app-example
 # generated native folders
 /ios
 /android
+drizzle/.migrations/.dev.vars

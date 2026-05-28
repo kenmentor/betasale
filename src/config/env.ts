@@ -1,3 +1,7 @@
+// NOTE BY LUMYN:env.ts is a TypeScript type definition. It is NOT where values are stored.
+// THAT IS WHY I CREATED .dev.vars         ← where the ACTUAL VALUES live for local development
+
+
 export interface Env {
   DB: D1Database;
   PAYSTACK_SECRET_KEY: string;
