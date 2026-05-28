@@ -2,11 +2,16 @@ name = "vendora-backend"
 main = "src/index.ts"
 compatibility_date = "2025-02-01"
 
+# WHY nodejs_compat: Better Auth uses AsyncLocalStorage from Node.js
+# internally. Cloudflare Workers don't include Node.js APIs by default.
+# This flag enables them. Without it, the Worker crashes on startup.
+compatibility_flags = ["nodejs_compat"]
+
 [[d1_databases]]
 binding = "DB"
 database_name = "vendora-db"
 database_id = ""
-migrations_dir = "drizzle/migrations"
+migrations_dir = "src/db/migrations"
 
 [env.production]
 [[env.production.d1_databases]]
