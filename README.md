@@ -1,6 +1,6 @@
-# beta_sale
+<!-- # beta_sale
 
-A new Flutter project.
+A new Flutter project. -->
 
 ## Getting Started
 
