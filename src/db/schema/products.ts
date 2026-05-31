@@ -1,6 +1,8 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
-
+import {
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 export const categories = sqliteTable("categories", {
   id: text("id").primaryKey(),
   name: text("name").notNull().unique(),
@@ -30,27 +32,68 @@ export const products = sqliteTable("products", {
   updatedAt: text("updated_at").notNull(),
 });
 
-export const reviews = sqliteTable("reviews", {
-  id: text("id").primaryKey(),
-  productId: text("product_id")
-    .notNull()
-    .references(() => products.id, { onDelete: "cascade" }),
-  buyerId: text("buyer_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  orderId: text("order_id").notNull(),
-  rating: integer("rating").notNull(),
-  text: text("text"),
-  createdAt: text("created_at").notNull(),
-});
+// export const reviews = sqliteTable("reviews", {
+// //   id: text("id").primaryKey(),
+// //   productId: text("product_id")
+// //     .notNull()
+// //     .references(() => products.id, { onDelete: "cascade" }),
+// //   buyerId: text("buyer_id")
+// //     .notNull()
+// //     .references(() => users.id, { onDelete: "cascade" }),
+// //   orderId: text("order_id").notNull(),
+// //   rating: integer("rating").notNull(),
+// //   text: text("text"),
+// //   createdAt: text("created_at").notNull(),
+// // });
 
-export const wishlist = sqliteTable("wishlist", {
-  id: text("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  productId: text("product_id")
-    .notNull()
-    .references(() => products.id, { onDelete: "cascade" }),
-  createdAt: text("created_at").notNull(),
-});
+export const reviews = sqliteTable(
+  "reviews",
+  {
+    id: text("id").primaryKey(),
+    productId: text("product_id")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    buyerId: text("buyer_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    orderId: text("order_id").notNull(),
+    rating: integer("rating").notNull(),
+    text: text("text"),
+    createdAt: text("created_at").notNull(),
+  },
+  (table) => ({
+    uniqueBuyerReview: uniqueIndex(
+      "review_product_buyer_unique"
+    ).on(table.productId, table.buyerId),
+  })
+);
+
+// export const wishlist = sqliteTable("wishlist", {
+//   id: text("id").primaryKey(),
+//   userId: text("user_id")
+//     .notNull()
+//     .references(() => users.id, { onDelete: "cascade" }),
+//   productId: text("product_id")
+//     .notNull()
+//     .references(() => products.id, { onDelete: "cascade" }),
+//   createdAt: text("created_at").notNull(),
+// });
+
+export const wishlist = sqliteTable(
+  "wishlist",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    productId: text("product_id")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    createdAt: text("created_at").notNull(),
+  },
+  (table) => ({
+    userProductUnique: uniqueIndex(
+      "wishlist_user_product_unique"
+    ).on(table.userId, table.productId),
+  })
+);

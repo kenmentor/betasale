@@ -15,10 +15,11 @@
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.6.11",
+    "@hono/zod-validator": "^0.8.0",
     "better-auth": "^1.6.11",
     "drizzle-orm": "^0.38.0",
     "hono": "^4.12.23",
-    "zod": "^3.24.0"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250201.0",
